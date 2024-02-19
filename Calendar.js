@@ -11,6 +11,7 @@ import {
 import { ActivityContext } from "./ActivityContext";
 import { StyleSheet } from "react-native";
 import SingleActivity from "./SingleActivity";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const Calendar = ({ setSelectedDate }) => {
   const { activities } = useContext(ActivityContext);
@@ -101,7 +102,7 @@ const Calendar = ({ setSelectedDate }) => {
   return (
     <View style={[styles.container, { width: containerWidth }]}>
       <Text style={styles.monthYear}>
-        {format(new Date(year, month - 1), "MMMM yyyy")}
+        {format(new Date(year, month - 1), "MMMM                                                      yyyy")}
       </Text>
       <View style={[styles.weekdayContainer, { width: containerWidth }]}>
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((weekday) => (
@@ -162,15 +163,24 @@ const Calendar = ({ setSelectedDate }) => {
           style={styles.prevButton}
           onPress={() => handleMonthChange(month - 1)}
         >
-          <Text>Prev Month</Text>
+          <Text>Prev</Text>
+        </TouchableOpacity>
+        {/* <Text>                                                                                         </Text> */}
+        {/* //make a Now button */}
+
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => handleMonthChange(new Date().getMonth() + 1)}
+        >
+          <Text>Now</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.nextButton}
           onPress={() => handleMonthChange(month + 1)}
         >
-          <Text>Next Month</Text>
+          <Text>Next</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.prevButton}
           onPress={() => handleYearChange(year - 1)}
         >
@@ -181,7 +191,7 @@ const Calendar = ({ setSelectedDate }) => {
           onPress={() => handleYearChange(year + 1)}
         >
           <Text>Next Year</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
@@ -196,7 +206,8 @@ const styles = StyleSheet.create({
   monthYear: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 0,
+    color: "red",
   },
   weekdayContainer: {
     flexDirection: "row",
@@ -207,6 +218,7 @@ const styles = StyleSheet.create({
   weekday: {
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "center",
   },
   weekContainer: {
     flexDirection: "row",
@@ -215,18 +227,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dayContainer: {
+    position: "relative", // Add this to make dayNumber absolute
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
     borderColor: "black",
   },
   dayNumber: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
     fontSize: 10,
-    padding: 2,
-    backgroundColor: "transparent",
+    padding: 5, // Adjust the padding as needed
+    backgroundColor: 'transparent',
     borderWidth: 0,
   },
-
   buttonContainer: {
     flexDirection: "row",
     marginTop: 10,
@@ -237,18 +252,6 @@ const styles = StyleSheet.create({
   nextButton: {
     marginHorizontal: 5,
   },
-  weekdayContainer: {
-    flexDirection: "row",
-
-    marginBottom: 5,
-  },
-  weekday: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center", // Align the text in the center horizontally
-  },
-  
-  
 });
 
 export default Calendar;
