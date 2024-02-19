@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, Modal, TextInput, Text, Button, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { View, Modal, Text, Button, StyleSheet, TouchableWithoutFeedback, ActivityIndicator ,TextInput} from "react-native";
+
 import { ActivityContext } from "./ActivityContext";
 import ActivityForm from "./ActivityForm";
 import { Keyboard } from "react-native";
@@ -17,6 +18,8 @@ const AddWithChatgpt = () => {
   const [error, setError] = useState(null);
   const [ActivityFormVisible, setActivityFormVisible] = useState(false);
   const [longPrompt, setLongPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     const longPrompt = `
@@ -54,6 +57,7 @@ const AddWithChatgpt = () => {
 
   const callGeminiAPI = async () => {
     try {
+      setIsLoading(true);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
       const result = await model.generateContent(longPrompt);
       const response = await result.response.text();
@@ -79,8 +83,10 @@ const AddWithChatgpt = () => {
       console.log("debug message3");
       setModalVisible(false);
       setActivityFormVisible(true);
+      setIsLoading(false);
     } catch (error) {
       setError(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -165,6 +171,7 @@ const AddWithChatgpt = () => {
               <Button title="Cancel" onPress={handleCancel} />
               <Button title="Submit" onPress={callGeminiAPI} />
             </View>
+            {isLoading && <ActivityIndicator style={styles.activityIndicator} />}
           </View>
         </View>
       </Modal>
@@ -239,10 +246,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    // marginBottom: 10,
     paddingVertical: 5,
-    paddingHorizontal: 20,
-    marginTop: 10,
+    paddingHorizontal: 10,
+    marginVertical: 10,
     borderWidth: 1,
     borderRadius: 5,
     borderColor: "#1E90FF", // Blue border color
@@ -252,6 +258,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#1E90FF", // Blue text color
   },
+  activityIndicator: {
+    position: "absolute",
+    alignSelf: "center",
+    top: "50%",
+  },
+  
 });
 
 export default AddWithChatgpt;

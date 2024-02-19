@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
+    color: "grey", // Make weekdays grey
   },
   weekContainer: {
     flexDirection: "row",
@@ -227,20 +228,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dayContainer: {
-    position: "relative", // Add this to make dayNumber absolute
+    position: "relative",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: "grey", // Make cell borders grey
   },
   dayNumber: {
     position: 'absolute',
     top: 0,
     left: 0,
     fontSize: 10,
-    padding: 5, // Adjust the padding as needed
+    padding: 5,
     backgroundColor: 'transparent',
     borderWidth: 0,
+    color: 'blue', // Make the day number blue
   },
   buttonContainer: {
     flexDirection: "row",
