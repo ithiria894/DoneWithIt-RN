@@ -60,3 +60,7 @@ ChatGPT processes it and returns a JSON object like:
   "event_type": "in-person",
   "reminder_time": "2025-02-22T08:00:00"
 }
+https://youtube.com/shorts/dhJ3FJ5OWdI?feature=share
+https://youtube.com/shorts/ZzPKBYPFQAY?feature=share
+https://youtube.com/shorts/Fd41BywiHAw?feature=share
+https://youtube.com/shorts/O1bmr8EXOag?feature=share
